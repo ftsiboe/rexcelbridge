@@ -2,12 +2,11 @@
 rm(list=ls(all=TRUE));gc()
 if (!requireNamespace("covr", quietly = TRUE)) install.packages("covr")
 devtools::document()
-clear_rfcipCalcPass_cache()
 
 if (!dir.exists("./data-raw/badges/lib")) {
   dir.create("./data-raw/badges/lib", recursive = TRUE)
 }
 
 library(covr)
-detach("package:rfcipCalcPass", unload = TRUE)
+detach("package:rexcelbridge", unload = TRUE)
 covr::report(file="data-raw/badges/test-coverage-report.html")

@@ -42,6 +42,8 @@ if (requireNamespace("devtools", quietly = TRUE)) {
 ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![R >= 4.0](https://img.shields.io/badge/R-%3E=4.0-blue)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+[![R-CMD-check](https://github.com/ftsiboe/rexcelbridge/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ftsiboe/rexcelbridge/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/ftsiboe/rexcelbridge/graph/badge.svg)](https://app.codecov.io/gh/ftsiboe/rexcelbridge)
 <!-- badges: end -->
 
 **Acknowledgment:** This package grew out of workflow needs to bridge **Excel RTD/data add-ins** (e.g., DTN ProphetX, Bloomberg) with reproducible **R** pipelines on Windows.
@@ -67,8 +69,6 @@ if (requireNamespace("devtools", quietly = TRUE)) {
 # install from a local folder during development
 devtools::install_github("ftsiboe/rexcelbridge",force = TRUE,upgrade = "never")
 ```
-
-*(When published to GitHub, replace with `remotes::install_github("yourname/rexcelbridge")`.)*
 
 ---
 
