@@ -1,0 +1,24 @@
+Package: rexcelbridge
+Type: Package
+Title: Bridge Excel Add-in Formulas and RTD Feeds into R (Windows)
+Version: 0.0.0.9000
+Author: Francis Tsiboe [aut, cre] (<https://orcid.org/0000-0001-5984-1072>)
+Maintainer: Francis Tsiboe <ftsiboe@hotmail.com>
+Creator: Francis Tsiboe
+Description: Vendor-neutral helpers to evaluate Excel formulas (including RTD-based add-ins
+    like DTN ProphetX and Bloomberg) from R via COM automation. Supports single-cell and
+    spilled-array results with a pluggable readiness predicate to handle transient "Wait"
+    tokens from providers.
+License: GPL-3 + file LICENSE
+URL: https://github.com/you/rexcelbridge
+BugReports: https://github.com/you/rexcelbridge/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+VignetteBuilder: knitr
+Depends: R (>= 4.1.0)
+Imports: RDCOMClient
+Remotes: 
+Suggests: knitr, rmarkdown,  withr, stats, rfcipDemand, testthat (>= 3.0.0)
+LazyData: true
+OS_type: windows

@@ -1,0 +1,161 @@
+rexcelbridge: Bridge Excel Add-in Formulas and RTD Feeds into R
+(Windows)
+================
+Francis Tsiboe, Agricultural Risk Policy Center, North Dakota State
+University, Fargo, ND 58102
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<!-- badges: start -->
+
+[![Project Status: Active – Stable and actively
+developed](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/ftsiboe/rexcelbridge/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ftsiboe/HiddenSafetynet2025/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/ftsiboe/rexcelbridge/graph/badge.svg?token=VIMHQH2SEO)](https://codecov.io/gh/ftsiboe/HiddenSafetynet2025)
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
+![R \>= 4.0](https://img.shields.io/badge/R-%3E=4.0-blue) [![Contributor
+Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
+<!-- badges: end -->
+
+**Acknowledgment:** This package grew out of workflow needs to bridge
+**Excel RTD/data add-ins** (e.g., DTN ProphetX, Bloomberg) with
+reproducible **R** pipelines on Windows.
+
+**Abstract:** `rexcelbridge` provides **vendor-neutral** helpers to
+execute Excel formulas from R via **COM automation**. It supports
+single-cell and spilled-array results and includes a pluggable
+“readiness” predicate to treat transient add-in states (e.g., *“Wait”*,
+*“Loading…”*) as not yet ready. This enables scripted retrieval of
+market/pricing and other plugin-delivered data directly into R, while
+keeping provider logic inside Excel.
+
+**Keywords:** Excel COM; RTD; Bloomberg; ProphetX; automation; Windows
+
+------------------------------------------------------------------------
+
+### 🚦 Requirements (read first)
+
+- **Windows + Microsoft Excel** installed
+- **Matching bitness**: R and Office must both be 64-bit *or* both
+  32-bit
+- Appropriate **Excel add-ins installed/enabled** (e.g., *Bloomberg*,
+  *ProphetX*) if you use their formulas
+- An **interactive desktop session** (RTD often won’t refresh under
+  headless services)
+
+------------------------------------------------------------------------
+
+## Installation
+
+``` r
+# install from a local folder during development
+devtools::install_github("ftsiboe/rexcelbridge",force = TRUE,upgrade = "never")
+```
+
+*(When published to GitHub, replace with
+`remotes::install_github("yourname/rexcelbridge")`.)*
+
+------------------------------------------------------------------------
+
+## Quick start
+
+Plain Excel (no vendor add-in needed):
+
+``` r
+library(rexcelbridge)
+rb_eval_single("=SUM(2,3,5)", visible = TRUE)
+```
+
+DTN ProphetX (RTD) example for a single cell
+
+``` r
+
+f <- dtn_prophetX_formula(
+  symbol = "BEANS.20254", 
+  scale = "Weekly", 
+  date = "2025-09-08", 
+  field = "Open")
+
+rb_eval_single(f, visible = TRUE) # = 9.94
+```
+
+Bloomberg Excel add-in examples (requires Bloomberg add-in):
+
+``` r
+# Spot price
+rb_eval_single('=BDP("IBM US Equity","PX_LAST")', visible = TRUE)
+```
+
+------------------------------------------------------------------------
+
+## Package workflow
+
+`rexcelbridge` functions act as a small pipeline:
+
+    rb_start_excel()        # start hidden Excel via COM (Windows)
+      └─ rb_ensure_addin()  # (optional) best-effort enable a vendor add-in by name
+          └─ rb_eval_single() / rb_eval_block()
+                • write formula(s) into a new workbook
+                • poll until “ready” (skipping blanks, Excel errors, tokens like "Wait")
+                • return a tidy R data.frame
+
+You can customize the “ready” detector:
+
+``` r
+pred <- rb_ready_predicate(wait_tokens = c("Wait","Loading...","Please wait"),
+                           treat_errors_as_ready = FALSE)
+
+rb_eval_single('=BDP("IBM US Equity","PX_LAST")', ready_fn = pred, visible = TRUE)
+```
+
+------------------------------------------------------------------------
+
+## API overview
+
+``` r
+rb_start_excel(visible = FALSE)
+
+rb_ensure_addin(xl, pattern)                  # e.g., "Bloomberg", "ProphetX"
+
+rb_excel_quote(x)                             # safely quote Excel string args
+
+rb_ready_predicate(wait_tokens = c("Wait","Loading...","N/A"), treat_errors_as_ready = FALSE)
+
+rb_eval_single(formulas,
+               timeout_sec = 120,
+               visible = FALSE,
+               ready_fn = rb_ready_predicate())
+
+rb_eval_block(formula,
+              nrow, ncol,
+              top_left = c(1L, 1L),
+              timeout_sec = 180,
+              visible = FALSE,
+              ready_fn = rb_ready_predicate())
+```
+
+------------------------------------------------------------------------
+
+## Troubleshooting
+
+- **Add-in not loading:** Open Excel manually, ensure add-in is enabled
+  (Trust Center), then try again.
+- **RTD doesn’t update:** Run in a normal **interactive** Windows
+  session (not as a background service).
+- **Bitness mismatch:** Reinstall R or Office so both are 64-bit
+  (recommended) or both 32-bit.
+- **Entitlements:** Vendor formulas may return `#N/A` without the proper
+  data permissions.
+- **Spill sizing:** For `rb_eval_block()`, set `nrow`/`ncol` to match
+  the actual spill (test in Excel first).
+- **Transient “Wait”:** Extend `wait_tokens` in `rb_ready_predicate()`
+  to match provider wording.
+
+------------------------------------------------------------------------
+
+## 📬 Contact
+
+Questions, suggestions, collaborations: **Francis Tsiboe** —
+<ftsiboe@hotmail.com>
