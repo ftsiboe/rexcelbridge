@@ -14,7 +14,7 @@ rb_start_excel <- function(visible = FALSE) {
   xl[["DisplayAlerts"]] <- FALSE
   xl[["Calculation"]]   <- -4105  # xlCalculationAutomatic
   xl
-}
+} 
 
 #' Ensure an Excel add-in is loaded (best effort)
 #'
