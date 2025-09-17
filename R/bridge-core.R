@@ -9,7 +9,7 @@
 #' @import RDCOMClient
 #' @export
 rb_start_excel <- function(visible = FALSE) {
-  xl <- RDCOMClient::COMCreate("Excel.Application")
+  xl <- COMCreate("Excel.Application")
   xl[["Visible"]]       <- visible
   xl[["DisplayAlerts"]] <- FALSE
   xl[["Calculation"]]   <- -4105  # xlCalculationAutomatic
