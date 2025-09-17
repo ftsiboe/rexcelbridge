@@ -16,7 +16,7 @@
 #' =IFERROR(RTD("prophetx.rtdserver","","AIHIST",symbol,scale,"1",date,"",field,"XD"),0)
 #' }
 #'
-#' @details
+#' @details 
 #' - The returned string is not evaluated in R; it must be written into an Excel
 #'   cell using \code{rb_eval_single()}.
 #' - The \code{date} argument is converted to an Excel serial (days since 1899-12-30).
