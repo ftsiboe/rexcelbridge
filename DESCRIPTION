@@ -19,6 +19,6 @@ VignetteBuilder: knitr
 Depends: R (>= 4.1.0)
 Imports: RDCOMClient
 Remotes: github::omegahat/RDCOMClient
-Suggests: mockery, knitr, rmarkdown,  withr, stats, rfcipDemand, testthat (>= 3.0.0)
+Suggests: mockery, knitr, rmarkdown, testthat (>= 3.0.0)
 LazyData: true
 OS_type: windows
