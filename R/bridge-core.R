@@ -130,14 +130,31 @@ rb_eval_single <- function(formulas,
     Sys.sleep(sleep); sleep <- min(max_sleep, sleep * 1.5)
   }
   
+  # ---- NULL-safe materialization (fixes test failure) ----
+  # map NULL -> NA, then create a simple atomic vector (no I(), no AsIs)
+  vals_fixed <- lapply(vals, function(x) if (is.null(x)) NA else x)
+  
+  # try to keep numeric if everything numeric-ish; else character
+  to_vec <- function(xs) {
+    flat <- vapply(xs, function(z) if (is.null(z)) NA else z, FUN.VALUE = numeric(1), USE.NAMES = FALSE)
+    # If coercion above failed (because not numeric), re-coerce to character
+    if (all(is.na(flat)) && any(!vapply(xs, is.null, logical(1)))) {
+      return(vapply(xs, function(z) if (is.null(z)) NA_character_ else as.character(z),
+                    FUN.VALUE = character(1), USE.NAMES = FALSE))
+    }
+    flat
+  }
+  result_vec <- to_vec(vals_fixed)
+  
   data.frame(
     row     = seq_along(formulas),
     formula = formulas,
-    result  = I(unlist(vals)),
+    result  = result_vec,
     ready   = ready,
     stringsAsFactors = FALSE
   )
 }
+
 
 
 

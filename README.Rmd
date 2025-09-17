@@ -75,7 +75,7 @@ devtools::install_github("ftsiboe/rexcelbridge",force = TRUE,upgrade = "never")
 Plain Excel (no vendor add-in needed):
 
 ```{r plain excel, echo=TRUE, eval=FALSE, message=FALSE, warning=FALSE}
-library(rexcelbridge)
+library(RDCOMClient)
 rb_eval_single("=SUM(2,3,5)", visible = TRUE)
 ```
 
