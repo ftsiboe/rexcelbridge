@@ -6,7 +6,7 @@
 \alias{rexcelbridge-package}
 \title{rexcelbridge: Bridge Excel Add-in Formulas and RTD Feeds into R (Windows)}
 \description{
-Vendor-neutral helpers to evaluate Excel formulas (including RTD-based add-ins like DTN ProphetX and Bloomberg) from R via COM automation. Supports single-cell and spilled-array results with a pluggable readiness predicate to handle transient "Wait" tokens from providers.
+Vendor-neutral helpers to evaluate Excel formulas (including RTD-based add-ins like DTN ProphetX and Bloomberg) from R via COM automation. Supports single-cell results with a pluggable readiness predicate to handle transient "Wait" tokens from providers.
 }
 \seealso{
 Useful links:

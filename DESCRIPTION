@@ -6,8 +6,8 @@ Author: Francis Tsiboe [aut, cre] (<https://orcid.org/0000-0001-5984-1072>)
 Maintainer: Francis Tsiboe <ftsiboe@hotmail.com>
 Creator: Francis Tsiboe
 Description: Vendor-neutral helpers to evaluate Excel formulas (including RTD-based add-ins
-    like DTN ProphetX and Bloomberg) from R via COM automation. Supports single-cell and
-    spilled-array results with a pluggable readiness predicate to handle transient "Wait"
+    like DTN ProphetX and Bloomberg) from R via COM automation. Supports single-cell results with 
+    a pluggable readiness predicate to handle transient "Wait"
     tokens from providers.
 License: GPL-3 + file LICENSE
 URL: https://github.com/you/rexcelbridge
@@ -18,7 +18,7 @@ RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 Depends: R (>= 4.1.0)
 Imports: RDCOMClient
-Remotes: 
-Suggests: knitr, rmarkdown,  withr, stats, rfcipDemand, testthat (>= 3.0.0)
+Remotes: github::omegahat/RDCOMClient
+Suggests: mockery, knitr, rmarkdown,  withr, stats, rfcipDemand, testthat (>= 3.0.0)
 LazyData: true
 OS_type: windows

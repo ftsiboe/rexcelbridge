@@ -12,8 +12,9 @@ University, Fargo, ND 58102
 developed](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/ftsiboe/rexcelbridge/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ftsiboe/HiddenSafetynet2025/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/ftsiboe/rexcelbridge/graph/badge.svg?token=VIMHQH2SEO)](https://codecov.io/gh/ftsiboe/HiddenSafetynet2025)
+[![R-CMD-check](https://github.com/ftsiboe/rexcelbridge/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ftsiboe/rexcelbridge/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/ftsiboe/rexcelbridge/graph/badge.svg?token=NP14WU2YK4)](https://codecov.io/gh/ftsiboe/rexcelbridge)
 ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![R \>= 4.0](https://img.shields.io/badge/R-%3E=4.0-blue) [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
@@ -53,9 +54,6 @@ keeping provider logic inside Excel.
 # install from a local folder during development
 devtools::install_github("ftsiboe/rexcelbridge",force = TRUE,upgrade = "never")
 ```
-
-*(When published to GitHub, replace with
-`remotes::install_github("yourname/rexcelbridge")`.)*
 
 ------------------------------------------------------------------------
 
