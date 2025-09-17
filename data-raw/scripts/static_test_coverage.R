@@ -9,4 +9,4 @@ if (!dir.exists("./data-raw/badges/lib")) {
 
 library(covr)
 detach("package:rexcelbridge", unload = TRUE)
-covr::report(file="data-raw/badges/test-coverage-report.html")
+covr::report(file="data-raw/badges/test-coverage-report.html") 
