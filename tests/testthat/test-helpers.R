@@ -30,7 +30,7 @@ testthat::test_that("get_target_dates scales are consistent", {
 
 testthat::test_that("split_into_chunks splits as expected", {
   df <- data.frame(id = 1:10000)
-  parts <- split_into_chunks(df, chunk_size = 3500)
+  parts <- split_into_chunks(df)
   testthat::expect_length(parts, 3)
   testthat::expect_equal(nrow(parts[[1]]), 3500)
   testthat::expect_equal(nrow(parts[[2]]), 3500)

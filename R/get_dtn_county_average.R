@@ -14,6 +14,7 @@
 #' @param fields Character vector of ProphetX fields to retrieve.
 #' @param county_fip Character/numeric vector of 5-digit county FIPS.
 #' @param state_abbreviation Character vector of state abbreviations (e.g., "IA","NE").
+#' @param control a list of control parameters -> dtn_prophetX_query_limit Max rows per chunk.
 #' @return A data.table with one row per (symbol, date). Columns include symbol metadata,
 #'   `date`, `time_scale`, and wide OHLCV columns (`open`, `high`, `low`, `close`, `volume`, `openint`).
 #' @import data.table
@@ -27,9 +28,13 @@ get_dtn_county_average <- function(
     county_price_type = "County Average Spot Cash Price",
     fields = c("Open","High","Low","Close","Volume","OpenInt"),
     county_fip = NULL,
-    state_abbreviation  = NULL
-){
-  on.exit(try(rb_kill_excel(), silent = TRUE), add = TRUE)  # ensure cleanup even on error
+    state_abbreviation  = NULL,
+    control = rexcelbridge_controls()){
+  
+  if(!control$continuous_integration_session){
+    on.exit(try(rb_kill_excel(), silent = TRUE), add = TRUE)  # ensure cleanup even on error
+  }
+  
   
   # ---- Allowed types ---------------------------------------------------------
   allowed_types <- c(
@@ -100,9 +105,11 @@ get_dtn_county_average <- function(
   
   # ---- Build & split queries --------------------------------------------------
   res <- build_queries(symbols = symbols, target_dates = target_dates,
-                              time_scale = time_scale, fields = fields)
+                       time_scale = time_scale, fields = fields,
+                       control=control)
   
   # ---- Download ---------------------------------------------------------------
+  if(!control$continuous_integration_session){
   res <- data.table::rbindlist(
     lapply(res, function(df){
       tryCatch({
@@ -117,6 +124,12 @@ get_dtn_county_average <- function(
   
   # filter unusable values
   res <- res[!is.na(value) & is.finite(value), ]
+  
+  }else{
+   
+    res <- data.frame()
+    
+  }
   
   if(nrow(res) == 0L){return(data.table::as.data.table(NULL))}
   
@@ -195,11 +208,13 @@ get_target_dates <- function(
 #' @keywords internal
 #' @noRd
 #' @param df data.frame/data.table.
-#' @param chunk_size Max rows per chunk.
+#' @param control a list of control parameters -> dtn_prophetX_query_limit Max rows per chunk.
 #' @return List of data.frames.
-split_into_chunks <- function(df, chunk_size = 3500) {
+split_into_chunks <- function(
+    df,
+    control = rexcelbridge_controls()){
   n <- nrow(df); if (n == 0) return(list(df))
-  idx <- ceiling(seq_len(n) / chunk_size)
+  idx <- ceiling(seq_len(n) / control$dtn_prophetX_query_limit)
   split(df, idx)
 }
 
@@ -210,8 +225,10 @@ split_into_chunks <- function(df, chunk_size = 3500) {
 #' @param target_dates Vector of query dates.
 #' @param time_scale ProphetX time_scale ("Daily","Weekly","Monthly").
 #' @param fields Character vector of fields.
+#' @param control a list of control parameters -> dtn_prophetX_query_limit Max rows per chunk.
 #' @return List of data.frames (chunks) with columns: symbol metadata, date, field, query.
-build_queries <- function(symbols, target_dates, time_scale, fields) {
+build_queries <- function(symbols, target_dates, time_scale, fields,
+                          control = rexcelbridge_controls()){
   base <- data.table::rbindlist(
     lapply(seq_len(nrow(symbols)), function(i) {
       data.frame(
@@ -238,5 +255,5 @@ build_queries <- function(symbols, target_dates, time_scale, fields) {
     fill = TRUE
   )
   
-  split_into_chunks(long_queries, 3500)
+  split_into_chunks(df=long_queries, control=control)
 }

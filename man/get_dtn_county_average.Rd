@@ -12,7 +12,8 @@ get_dtn_county_average(
   county_price_type = "County Average Spot Cash Price",
   fields = c("Open", "High", "Low", "Close", "Volume", "OpenInt"),
   county_fip = NULL,
-  state_abbreviation = NULL
+  state_abbreviation = NULL,
+  control = rexcelbridge_controls()
 )
 }
 \arguments{
@@ -33,6 +34,8 @@ Weekends are dropped.}
 \item{county_fip}{Character/numeric vector of 5-digit county FIPS.}
 
 \item{state_abbreviation}{Character vector of state abbreviations (e.g., "IA","NE").}
+
+\item{control}{a list of control parameters -> dtn_prophetX_query_limit Max rows per chunk.}
 }
 \value{
 A data.table with one row per (symbol, date). Columns include symbol metadata,
