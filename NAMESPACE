@@ -2,6 +2,7 @@
 
 export(bloomberg_bds_formula)
 export(dtn_prophetX_formula)
+export(get_dtn_county_average)
 export(rb_ensure_addin)
 export(rb_eval_single)
 export(rb_excel_quote)
@@ -9,3 +10,5 @@ export(rb_kill_excel)
 export(rb_ready_predicate)
 export(rb_start_excel)
 import(RDCOMClient)
+import(data.table)
+importFrom(stats,setNames)

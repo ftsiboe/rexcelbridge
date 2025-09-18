@@ -1,7 +1,7 @@
 test_that("dtn_prophetX_formula builds the expected single-field formula (char date)", {
   got <- dtn_prophetX_formula(
     symbol = "BEANS.20254.B",
-    scale  = "Weekly",
+    time_scale  = "Weekly",
     date   = "2025-09-15",   # char input
     field  = "Open"
   )
@@ -14,7 +14,7 @@ test_that("dtn_prophetX_formula behavior with NA inputs (symbol/field) and NA da
   # NA symbol/field are quoted as empty string by rb_excel_quote(); date -> NA serial
   got <- dtn_prophetX_formula(
     symbol = NA_character_,
-    scale  = "Weekly",
+    time_scale  = "Weekly",
     date   = NA,                 # as.integer(as.Date(NA) - ...) => NA
     field  = NA_character_
   )

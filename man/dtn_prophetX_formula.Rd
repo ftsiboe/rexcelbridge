@@ -4,12 +4,12 @@
 \alias{dtn_prophetX_formula}
 \title{Build a DTN ProphetX AIHIST RTD formula}
 \usage{
-dtn_prophetX_formula(symbol, scale, date, field)
+dtn_prophetX_formula(symbol, time_scale, date, field)
 }
 \arguments{
 \item{symbol}{Character. ProphetX instrument symbol (e.g., \code{"BEANS.20254.B"}).}
 
-\item{scale}{Character. Time scale such as \code{"Daily"}, \code{"Weekly"}, or \code{"Monthly"}.}
+\item{time_scale}{Character. Time scale such as \code{"Daily"}, \code{"Weekly"}, or \code{"Monthly"}.}
 
 \item{date}{Date or string convertible to Date. The Excel serial number is computed relative to 1899-12-30.}
 
@@ -19,7 +19,7 @@ dtn_prophetX_formula(symbol, scale, date, field)
 \value{
 A character string containing a valid Excel formula of the form:
 \preformatted{
-=IFERROR(RTD("prophetx.rtdserver","","AIHIST",symbol,scale,"1",date,"",field,"XD"),0)
+=IFERROR(RTD("prophetx.rtdserver","","AIHIST",symbol,time_scale,"1",date,"",field,"XD"),0)
 }
 }
 \description{

@@ -17,8 +17,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 Depends: R (>= 4.1.0)
-Imports: RDCOMClient
+Imports: RDCOMClient, data.table, usmap
 Remotes: github::omegahat/RDCOMClient
-Suggests: mockery, knitr, rmarkdown, testthat (>= 3.0.0)
+Suggests: tidyr, mockery, knitr, rmarkdown, testthat (>= 3.0.0)
 LazyData: true
 OS_type: windows

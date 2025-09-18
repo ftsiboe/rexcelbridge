@@ -136,13 +136,33 @@ rb_eval_single <- function(formulas,
   
   # try to keep numeric if everything numeric-ish; else character
   to_vec <- function(xs) {
-    flat <- vapply(xs, function(z) if (is.null(z)) NA else z, FUN.VALUE = numeric(1), USE.NAMES = FALSE)
-    # If coercion above failed (because not numeric), re-coerce to character
-    if (all(is.na(flat)) && any(!vapply(xs, is.null, logical(1)))) {
-      return(vapply(xs, function(z) if (is.null(z)) NA_character_ else as.character(z),
-                    FUN.VALUE = character(1), USE.NAMES = FALSE))
+    # ensure each element is length 1 or NULL
+    stopifnot(all(vapply(xs, function(z) is.null(z) || length(z) == 1L, logical(1))))
+    
+    non_null <- Filter(Negate(is.null), xs)
+    
+    # if all non-null are coercible to numeric, return numeric; else character
+    if (length(non_null) > 0L) {
+      can_num <- {
+        tmp <- suppressWarnings(as.numeric(unlist(non_null, use.names = FALSE)))
+        # treat TRUE/FALSE and numeric strings as OK; NA only allowed if the source was NA
+        all(!is.na(tmp) | is.na(unlist(non_null, use.names = FALSE)))
+      }
+    } else {
+      can_num <- FALSE
     }
-    flat
+    
+    if (can_num) {
+      vapply(xs,
+             function(z) if (is.null(z)) NA_real_ else as.numeric(z),
+             FUN.VALUE = numeric(1),
+             USE.NAMES = FALSE)
+    } else {
+      vapply(xs,
+             function(z) if (is.null(z)) NA_character_ else as.character(z),
+             FUN.VALUE = character(1),
+             USE.NAMES = FALSE)
+    }
   }
   result_vec <- to_vec(vals_fixed)
   

@@ -2,11 +2,11 @@
 rm(list = ls(all = TRUE)); gc()
 
 # Clean generated artifacts
-unlink(c(
-  "NAMESPACE",
-  #list.files("./data", full.names = TRUE),
-  list.files("./man",  full.names = TRUE)
-))
+unlink(c("NAMESPACE","./R/helper_data.R",
+         list.files("./data", full.names = TRUE),
+         list.files("./man", full.names = TRUE)))
+
+source("data-raw/scripts/build_internal_datasets.R")
 
 # Sanity pass through R/ sources: shows any non-ASCII characters per file
 for (i in list.files("R", full.names = TRUE)) {
