@@ -5,15 +5,14 @@
 \title{Controls for rexcelbridge session}
 \usage{
 rexcelbridge_controls(
-  dtn_prophetX_query_limit = 500L,
+  query_limit = 500L,
   continuous_integration_session = FALSE,
   excel_eval_max_attempts = 2L,
   excel_eval_retry_sleep = 1
 )
 }
 \arguments{
-\item{dtn_prophetX_query_limit}{integer(1). Max rows per DTN ProphetX batch
-(used for chunking). Must be > 0. Default: \code{3500L}.}
+\item{query_limit}{integer(1). Max rows per batch (used for chunking). Must be > 0. Default: \code{500L}.}
 
 \item{continuous_integration_session}{logical(1). If \code{TRUE}, skip Excel/
 ProphetX evaluation and other side effects; used for CI runs. Default: \code{FALSE}.}

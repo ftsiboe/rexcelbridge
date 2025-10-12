@@ -2,8 +2,7 @@
 #'
 #' Centralized knobs for batching and Excel/ProphetX evaluation behavior.
 #'
-#' @param dtn_prophetX_query_limit integer(1). Max rows per DTN ProphetX batch
-#'   (used for chunking). Must be > 0. Default: `3500L`.
+#' @param query_limit integer(1). Max rows per batch (used for chunking). Must be > 0. Default: `500L`.
 #' @param continuous_integration_session logical(1). If `TRUE`, skip Excel/
 #'   ProphetX evaluation and other side effects; used for CI runs. Default: `FALSE`.
 #' @param excel_eval_max_attempts integer(1). Max retry attempts when evaluating
@@ -14,18 +13,18 @@
 #' @return Named list of control values (validated and sanitized).
 #' @export
 rexcelbridge_controls <- function(
-    dtn_prophetX_query_limit = 500L,
+    query_limit                    = 500L,
     continuous_integration_session = FALSE,
-    excel_eval_max_attempts = 2L,
-    excel_eval_retry_sleep = 1
-) {
+    excel_eval_max_attempts        = 2L,
+    excel_eval_retry_sleep         = 1
+){
   
   # ---- validate & sanitize 
-  if (!is.numeric(dtn_prophetX_query_limit) || length(dtn_prophetX_query_limit) != 1L ||
-      !is.finite(dtn_prophetX_query_limit) || dtn_prophetX_query_limit <= 0) {
-    stop("`dtn_prophetX_query_limit` must be a single positive number.")
+  if (!is.numeric(query_limit) || length(query_limit) != 1L ||
+      !is.finite(query_limit) || query_limit <= 0) {
+    stop("`query_limit` must be a single positive number.")
   }
-  dtn_prophetX_query_limit <- as.integer(dtn_prophetX_query_limit)
+  query_limit <- as.integer(query_limit)
   
   if (!is.logical(continuous_integration_session) || length(continuous_integration_session) != 1L ||
       is.na(continuous_integration_session)) {
@@ -45,10 +44,10 @@ rexcelbridge_controls <- function(
   
   # ---- return
   list(
-    dtn_prophetX_query_limit   = dtn_prophetX_query_limit,
+    query_limit   = query_limit,
     continuous_integration_session = continuous_integration_session,
-    excel_eval_max_attempts    = excel_eval_max_attempts,
-    excel_eval_retry_sleep     = excel_eval_retry_sleep
+    excel_eval_max_attempts        = excel_eval_max_attempts,
+    excel_eval_retry_sleep         = excel_eval_retry_sleep
   )
 }
 
