@@ -16,3 +16,13 @@ A COM handle to the Excel Application object.
 Launch a hidden (by default) Excel Application via COM and configure display alerts
 and calculation mode (Automatic).
 }
+\seealso{
+Other excel bridge: 
+\code{\link{rb_ensure_addin}()},
+\code{\link{rb_eval_single}()},
+\code{\link{rb_eval_with_retries}()},
+\code{\link{rb_excel_quote}()},
+\code{\link{rb_kill_excel}()},
+\code{\link{rb_ready_predicate}()}
+}
+\concept{excel bridge}

@@ -10,15 +10,26 @@ rb_ready_predicate(
 )
 }
 \arguments{
-\item{wait_tokens}{Character vector of tokens to be treated as "not ready"
-(e.g., c("Wait","Loading...")). Case-insensitive.}
+\item{wait_tokens}{Character vector of tokens treated as "not ready"
+(e.g., \code{c("Wait","Loading...","N/A")}). Case-insensitive.}
 
 \item{treat_errors_as_ready}{Logical; if TRUE, Excel errors stop the wait.}
 }
 \value{
-A function f(x) -> TRUE if ready, FALSE otherwise.
+A function \code{f(x) -> TRUE} if ready, \code{FALSE} otherwise.
 }
 \description{
 Returns a function(value) that decides whether a cell is "ready".
-By default, treats blanks, Excel errors, and vendor "wait" tokens as NOT ready.
+By default, treats blanks, Excel errors, explicit NA values, and vendor
+"wait" tokens as NOT ready.
 }
+\seealso{
+Other excel bridge: 
+\code{\link{rb_ensure_addin}()},
+\code{\link{rb_eval_single}()},
+\code{\link{rb_eval_with_retries}()},
+\code{\link{rb_excel_quote}()},
+\code{\link{rb_kill_excel}()},
+\code{\link{rb_start_excel}()}
+}
+\concept{excel bridge}

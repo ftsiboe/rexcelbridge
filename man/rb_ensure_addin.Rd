@@ -7,14 +7,28 @@
 rb_ensure_addin(xl, pattern)
 }
 \arguments{
-\item{xl}{Excel Application COM handle from rb_start_excel().}
+\item{xl}{Excel Application COM handle from \code{\link[=rb_start_excel]{rb_start_excel()}}.}
 
-\item{pattern}{Character regex used to match the add-in name (e.g., "ProphetX", "Bloomberg").}
+\item{pattern}{Character regex used to match the add-in name
+(e.g., "ProphetX", "Bloomberg").}
 }
 \value{
-Invisibly TRUE (no error if not found).
+Invisibly returns TRUE (never errors if not found).
 }
 \description{
 Tries to locate and enable an add-in by name pattern (case-insensitive).
 Useful before evaluating formulas that depend on a vendor add-in.
 }
+\details{
+Defensive against environments where \code{AddIns} is missing or inaccessible.
+}
+\seealso{
+Other excel bridge: 
+\code{\link{rb_eval_single}()},
+\code{\link{rb_eval_with_retries}()},
+\code{\link{rb_excel_quote}()},
+\code{\link{rb_kill_excel}()},
+\code{\link{rb_ready_predicate}()},
+\code{\link{rb_start_excel}()}
+}
+\concept{excel bridge}

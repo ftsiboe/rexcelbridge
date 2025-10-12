@@ -15,3 +15,13 @@ Character scalar safe to paste into a formula.
 \description{
 Escapes embedded quotes and wraps non-numeric values in double quotes.
 }
+\seealso{
+Other excel bridge: 
+\code{\link{rb_ensure_addin}()},
+\code{\link{rb_eval_single}()},
+\code{\link{rb_eval_with_retries}()},
+\code{\link{rb_kill_excel}()},
+\code{\link{rb_ready_predicate}()},
+\code{\link{rb_start_excel}()}
+}
+\concept{excel bridge}

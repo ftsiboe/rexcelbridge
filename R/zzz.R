@@ -4,7 +4,7 @@
   if (getRversion() >= "2.15.1") {
     utils::globalVariables(
       strsplit(
-        "field setNames symbols_county_price value",
+        "",
         "\\s+"
       )[[1]]
     )

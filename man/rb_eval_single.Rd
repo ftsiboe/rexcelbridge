@@ -6,7 +6,7 @@
 \usage{
 rb_eval_single(
   formulas,
-  timeout_sec = 120,
+  timeout_sec = 1,
   visible = FALSE,
   ready_fn = rb_ready_predicate()
 )
@@ -15,7 +15,7 @@ rb_eval_single(
 \item{formulas}{Character vector of Excel formulas (e.g., "=SUM(1,2)",
 '=RTD("prophetx.rtdserver","","AIHIST",...)', '=BDP("IBM US Equity","PX_LAST")').}
 
-\item{timeout_sec}{Max seconds to wait. Default 120.}
+\item{timeout_sec}{Max seconds to wait. Default 1.}
 
 \item{visible}{Show the Excel window. Default FALSE.}
 
@@ -29,3 +29,13 @@ Data frame with columns: row, formula, result, ready.
 Writes each formula into successive rows of column A in a new workbook,
 polls until values are "ready" per a predicate, and returns the results.
 }
+\seealso{
+Other excel bridge: 
+\code{\link{rb_ensure_addin}()},
+\code{\link{rb_eval_with_retries}()},
+\code{\link{rb_excel_quote}()},
+\code{\link{rb_kill_excel}()},
+\code{\link{rb_ready_predicate}()},
+\code{\link{rb_start_excel}()}
+}
+\concept{excel bridge}
